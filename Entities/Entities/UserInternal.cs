@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Entities.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -8,11 +9,25 @@ using System.Threading.Tasks;
 namespace Entities.Entities
 {
     [Table("UserInternal")]
-    public class UserInternal
+    public class UserInternal : ModelBase
     {
         public int Id { get; set; }
+        /// <summary>
+        /// Nome do usuário ( administrador ou funcionário )
+        /// </summary>
+        public string Name { get; set; }
+        /// <summary>
+        /// Tipo de perfil
+        /// </summary>
+        public EProfile Profile { get; set; }
+        /// <summary>
+        /// Email do usuário
+        /// </summary>
         public string? Email { get; set; }
-        public string? Password { get; set; }
+        /// <summary>
+        /// Senha do usuário
+        /// </summary>
+        public string Password { get; set; }
         
     }
 }
