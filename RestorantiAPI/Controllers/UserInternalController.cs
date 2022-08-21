@@ -8,12 +8,12 @@ namespace RestorantiAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class UserController : ControllerBase
+    public class UserInternalController : ControllerBase
     {
 
         private readonly IRUserInternal _rUserInternal;
         private readonly IUserInternalService _userService;
-        public UserController(IRUserInternal rUserInternal,
+        public UserInternalController(IRUserInternal rUserInternal,
                               IUserInternalService userService
                               )
         {
@@ -35,7 +35,7 @@ namespace RestorantiAPI.Controllers
             }
             else
             {
-                return Content(HttpStatusCode.InternalServerError.ToString());
+                return BadRequest("Model is not valid!");
             }
         }
 
