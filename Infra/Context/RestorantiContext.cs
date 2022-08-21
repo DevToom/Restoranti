@@ -15,7 +15,7 @@ namespace Infra.Context
 
         #region DbSet's
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<UserInternal>? Users { get; set; }
 
         #endregion
 

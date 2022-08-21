@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Infra.Repository.Interface
 {
-    public interface IRUser : IRestorantiGeneric<User>
+    public interface IRUserInternal : IRestorantiGeneric<UserInternal>
     {
-        Task<bool> CreateAsync(User user);
+        Task<bool> CreateAsync(UserInternal user);
     }
 }

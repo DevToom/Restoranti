@@ -11,15 +11,15 @@ using System.Threading.Tasks;
 
 namespace Infra.Repository
 {
-    public class RUser : RestorantiRepository<User>, IRUser
+    public class RUserInternal : RestorantiRepository<UserInternal>, IRUserInternal
     {
         private readonly DbContextOptions<RestorantiContext> _optionsBuilder;
-        public RUser()
+        public RUserInternal()
         {
             this._optionsBuilder = new DbContextOptions<RestorantiContext>();
         }
 
-        public async Task<bool> CreateAsync(User user)
+        public async Task<bool> CreateAsync(UserInternal user)
         {
             using (var data = new RestorantiContext(_optionsBuilder))
             {

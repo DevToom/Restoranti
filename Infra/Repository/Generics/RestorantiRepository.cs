@@ -47,7 +47,15 @@ namespace Infra.Repository.Generics
         {
             using (var data = new RestorantiContext(_optionsBuilder))
             {
-                return await data.Set<T>().FindAsync(Id);
+                var result = await data.Set<T>().FindAsync(Id);
+                if (result != null)
+                {
+                    return result;
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
 

@@ -9,19 +9,19 @@ using System.Threading.Tasks;
 
 namespace Domain.Services
 {
-    public class UserService : IUserService
+    public class UserInternalService : IUserInternalService
     {
-        private readonly IRUser _rUser;
+        private readonly IRUserInternal _rUserInternal;
 
-        public UserService(IRUser rUser)
+        public UserInternalService(IRUserInternal rUserInternal)
         {
-            this._rUser = rUser;
+            this._rUserInternal = rUserInternal;
         }
 
-        public async Task<UserResponse> Create(User user)
+        public async Task<UserResponse> Create(UserInternal user)
         {
             //Validaçãó para um create antes de encaminhar para a repository
-            var hasAdded = await _rUser.CreateAsync(user);
+            var hasAdded = await _rUserInternal.CreateAsync(user);
 
             if (hasAdded)
                 return new UserResponse { HasError = false, Message = "" };
@@ -30,9 +30,9 @@ namespace Domain.Services
 
         }
 
-        public async Task<List<User>> List()
+        public async Task<List<UserInternal>> List()
         {
-            List<User> result = await _rUser.GetList();
+            List<UserInternal> result = await _rUserInternal.GetList();
             return result;
         }
 

@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace Entities.Entities
 {
-    [Table("User")]
-    public class User
+    [Table("UserInternal")]
+    public class UserInternal
     {
         public int Id { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
+        public string? Email { get; set; }
+        public string? Password { get; set; }
+        
     }
 }

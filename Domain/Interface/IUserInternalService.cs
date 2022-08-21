@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Domain.Interface
 {
-    public interface IUserService
+    public interface IUserInternalService
     {
-        Task<UserResponse> Create(User user);
-        Task<List<User>> List();
+        Task<UserResponse> Create(UserInternal user);
+        Task<List<UserInternal>> List();
     }
 }

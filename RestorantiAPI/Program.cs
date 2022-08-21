@@ -8,19 +8,16 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton(typeof(IRestorantiGeneric<>), typeof(RestorantiRepository<>));
-builder.Services.AddSingleton<IRUser, RUser>();
-
 #region Configure Repositories
 
 builder.Services.AddSingleton(typeof(IRestorantiGeneric<>), typeof(RestorantiRepository<>));
-builder.Services.AddSingleton<IRUser, RUser>();
+builder.Services.AddSingleton<IRUserInternal, RUserInternal>();
 
 #endregion
 
 #region Configure Services
 
-builder.Services.AddSingleton<IUserService, UserService>();
+builder.Services.AddSingleton<IUserInternalService, UserInternalService>();
 
 #endregion
 

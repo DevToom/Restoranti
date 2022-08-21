@@ -11,18 +11,19 @@ namespace RestorantiAPI.Controllers
     public class UserController : ControllerBase
     {
 
-        private readonly IRUser _rUser;
-        private readonly IUserService _userService;
-        public UserController(IRUser rUser,
-                              IUserService userService
+        private readonly IRUserInternal _rUserInternal;
+        private readonly IUserInternalService _userService;
+        public UserController(IRUserInternal rUserInternal,
+                              IUserInternalService userService
                               )
         {
-            this._rUser = rUser;
+            this._rUserInternal = rUserInternal;
             this._userService = userService;
         }
+
         [Route("Create")]
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] User request)
+        public async Task<IActionResult> Create([FromBody] UserInternal request)
         {
             if (ModelState.IsValid)
             {
