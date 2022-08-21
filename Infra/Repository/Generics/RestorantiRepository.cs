@@ -1,63 +1,96 @@
-﻿using Infra.Context;
+﻿using Entities.Entities;
+using Infra.Context;
 using Infra.Repository.Generics.Interface;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Win32.SafeHandles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Infra.Repository.Generics
 {
-    public class RestorantiRepository<T> : IRestorantiRepository<T>, IDisposable where T : class
+    public class RestorantiRepository<T> : IRestorantiGeneric<T>, IDisposable where T : class
     {
-        private readonly RestorantiContext _context;
-        private readonly DbSet<T> _table;
+        private readonly DbContextOptions<RestorantiContext> _optionsBuilder;
 
-        public RestorantiRepository(RestorantiContext context)
+        bool disposed = false;
+        SafeHandle handle = new SafeFileHandle(IntPtr.Zero, true);
+
+        public RestorantiRepository()
         {
-            _context = context;
-            _table = _context.Set<T>();
+            this._optionsBuilder = new DbContextOptions<RestorantiContext>();
         }
 
-        public List<T> GetAll()
+        public async Task Add(T entity)
         {
-            return _table.ToList();
-        }
-
-        public List<T> GetList(Expression<Func<T, bool>> expression)
-        {
-            return _table.Where(expression).ToList();
-        }
-        public void Add(T entity)
-        {
-            if (entity != null)
+            using (var data = new RestorantiContext(_optionsBuilder))
             {
-                var a = _table.Add(entity);
-                Save();
-                Dispose();
+                await data.Set<T>().AddAsync(entity);
+                await data.SaveChangesAsync();
             }
         }
 
-        public void Delete(T entity)
+        public async Task Delete(T entity)
         {
-            _table.Remove(entity);
+            using (var data = new RestorantiContext(_optionsBuilder))
+            {
+                data.Set<T>().Remove(entity);
+                await data.SaveChangesAsync();
+            }
         }
 
-        public void Edit(T entity)
+        public async Task<T> GetById(int Id)
         {
-            _context.Entry(entity).State = EntityState.Modified;
+            using (var data = new RestorantiContext(_optionsBuilder))
+            {
+                return await data.Set<T>().FindAsync(Id);
+            }
         }
 
-        public void Save()
+        public async Task<List<T>> GetList()
         {
-            _context.SaveChanges();
+            using (var data = new RestorantiContext(_optionsBuilder))
+            {
+                return await data.Set<T>().ToListAsync();
+            }
         }
+
+        public async Task Update(T entity)
+        {
+            using (var data = new RestorantiContext(_optionsBuilder))
+            {
+                data.Set<T>().Update(entity);
+                await data.SaveChangesAsync();
+            }
+        }
+
+        #region Dispose Method
 
         public void Dispose()
         {
-            _context.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposed)
+                return;
+
+            if (disposing)
+            {
+                handle.Dispose();
+                // Free any other managed objects here.
+                //
+            }
+
+            disposed = true;
+        }
+
+        #endregion
+
     }
 }

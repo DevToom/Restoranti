@@ -1,19 +1,28 @@
-using Infra.Context;
+using Domain.Interface;
+using Domain.Services;
 using Infra.Repository;
+using Infra.Repository.Generics;
+using Infra.Repository.Generics.Interface;
 using Infra.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.AddSingleton(typeof(IRestorantiGeneric<>), typeof(RestorantiRepository<>));
+builder.Services.AddSingleton<IRUser, RUser>();
 
-var connectionString = builder.Configuration.GetConnectionString("Restoranti");
+#region Configure Repositories
 
+builder.Services.AddSingleton(typeof(IRestorantiGeneric<>), typeof(RestorantiRepository<>));
+builder.Services.AddSingleton<IRUser, RUser>();
 
-var serverVersion = new MySqlServerVersion(new Version());
+#endregion
 
-builder.Services.AddDbContext<RestorantiContext>(x => x.UseMySql(connectionString, serverVersion));
-builder.Services.AddScoped<IRUser, RUser>();
+#region Configure Services
+
+builder.Services.AddSingleton<IUserService, UserService>();
+
+#endregion
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
