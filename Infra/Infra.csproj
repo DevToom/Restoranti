@@ -17,4 +17,20 @@
     <ProjectReference Include="..\Entities\Entities.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Scripts\scriptsDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>scriptsDB.txt</LastGenOutput>
+    </None>
+    <None Update="Scripts\scriptsDB.txt">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>scriptsDB.tt</DependentUpon>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
 </Project>

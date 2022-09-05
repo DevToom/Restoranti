@@ -9,6 +9,8 @@ namespace Entities.Entities
     public class UserResponse
     {
         public bool HasError { get; set; }
-        public string Message { get; set; }
+        public string? Message { get; set; }
+
+        public UserInternal? User { get; set; }
     }
 }

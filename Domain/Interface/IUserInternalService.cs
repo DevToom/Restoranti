@@ -10,6 +10,7 @@ namespace Domain.Interface
     public interface IUserInternalService
     {
         Task<UserResponse> Create(UserInternal user);
+        Task<UserResponse> Login(UserInternal user);
         Task<List<UserInternal>> List();
     }
 }

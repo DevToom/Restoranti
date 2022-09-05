@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestorantiAPI", "RestorantiAPI\RestorantiAPI.csproj", "{45F51834-C14B-4517-B7C2-2B56C00448DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{8DE825D7-40C6-4132-82B4-05F8953231AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entities.csproj", "{8DE825D7-40C6-4132-82B4-05F8953231AA}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "InstallerRestorantiAPI", "InstallerRestorantiAPI\InstallerRestorantiAPI.vdproj", "{FDDE30A9-5F93-47E8-AA3E-589FE5E018A1}"
 EndProject

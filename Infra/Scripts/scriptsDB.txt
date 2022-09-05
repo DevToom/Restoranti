@@ -1,0 +1,29 @@
+﻿
+SCRIPTS EXECUTADOS DURANTE A APLICAÇÃO....
+
+=-=-=-=-=-=--=-=-==-=-=-=-==-=-=-TABELA DE USUÁRIOS INTERNOS-=-==-=-==-=-=-=--=-=-==-=-=-=-=-=-=
+
+
+CREATE TABLE UserInternal(
+Id int AUTO_INCREMENT PRIMARY KEY,
+Name varchar(100) NOT NULL,
+Phone varchar(15) NULL,
+Email varchar(50) NOT NULL,
+Profile int NOT NULL,
+Username varchar(20) NOT NULL,
+Password varchar(80) NOT NULL,
+ConfirmPassword varchar(80) NOT NULL,
+CreationDate datetime NOT NULL,
+CreationUserId int NOT NULL,
+ModifiedDate datetime NULL,
+ModifiedUserId int NULL
+); 
+
+Insert Into UserInternal(Name,Email,Profile,Username,Password, ConfirmPassword, 
+CreationDate, CreationUserId)
+Values (
+"Administrador","administrador@hotmail.com",0,"admin","123456", "123456", now(),1
+)
+
+
+=-=-=-=-=-=--=-=-==-=-=-=-==-=-=-=-=-=-=-==-=-=-=-=-==-=-=-=-=-=--=-=-==-=-==-=-=-=--=-=-==-=-=

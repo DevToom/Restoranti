@@ -12,22 +12,41 @@ namespace Entities.Entities
     public class UserInternal : ModelBase
     {
         public int Id { get; set; }
+
         /// <summary>
         /// Nome do usuário ( administrador ou funcionário )
         /// </summary>
         public string Name { get; set; }
+
         /// <summary>
-        /// Tipo de perfil
+        /// Telefone do usuário
         /// </summary>
-        public EProfile Profile { get; set; }
+        public string Phone { get; set; }
+
         /// <summary>
         /// Email do usuário
         /// </summary>
         public string? Email { get; set; }
+
+        /// <summary>
+        /// Tipo de perfil
+        /// </summary>
+        public EProfile Profile { get; set; }
+
+        /// <summary>
+        /// Nome de usuário
+        /// </summary>
+        public string Username { get; set; }
+
         /// <summary>
         /// Senha do usuário
         /// </summary>
         public string Password { get; set; }
-        
+
+        /// <summary>
+        /// Confirmação da senha do usuário
+        /// </summary>
+        public string ConfirmPassword { get; set; }
+
     }
 }

@@ -39,6 +39,24 @@ namespace RestorantiAPI.Controllers
             }
         }
 
+        [Route("Login")]
+        [HttpPost]
+        public async Task<IActionResult> Login([FromBody] UserInternal request)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _userService.Login(request);
+                if (!result.HasError)
+                    return Ok("Usuário logado com sucesso!");
+                else
+                    return BadRequest(result.Message);
+            }
+            else
+            {
+                return BadRequest("Model is not valid!");
+            }
+        }
+
         [Route("GetUsers")]
         [HttpGet]
         public async Task<IActionResult> GetUsers()

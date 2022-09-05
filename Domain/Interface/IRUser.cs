@@ -11,5 +11,6 @@ namespace Infra.Repository.Interface
     public interface IRUserInternal : IRestorantiGeneric<UserInternal>
     {
         Task<bool> CreateAsync(UserInternal user);
+        Task<UserInternal> GetByUsername(UserInternal user);
     }
 }

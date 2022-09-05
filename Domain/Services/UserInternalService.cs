@@ -20,19 +20,97 @@ namespace Domain.Services
 
         public async Task<UserResponse> Create(UserInternal user)
         {
-            //Validaçãó para um create antes de encaminhar para a repository
-            var hasAdded = await _rUserInternal.CreateAsync(user);
+            string hashPassword = EncodeHashPassword(user.Password);
 
-            if (hasAdded)
-                return new UserResponse { HasError = false, Message = "" };
+            if (hashPassword != null)
+            {
+                user.Password = hashPassword;
+                user.ConfirmPassword = hashPassword;
+
+                //Validaçãó para um create antes de encaminhar para a repository
+                var hasAdded = await _rUserInternal.CreateAsync(user);
+
+                if (hasAdded)
+                    return new UserResponse { HasError = false, Message = "" };
+                else
+                    return new UserResponse { HasError = true, Message = "Não foi possível criar um novo usuário! Favor verificar." };
+            }
             else
-                return new UserResponse { HasError = true, Message = "Não foi possível criar um novo usuário! Favor verificar." };
+                return new UserResponse { HasError = true, Message = "Não foi possível criar um novo usuário! Favor acionar o suporte." };
+
+        }
+
+        public async Task<UserResponse> Login(UserInternal user)
+        {
+            try
+            {
+                var userExistent = _rUserInternal.GetByUsername(user).Result;
+                if (userExistent != null)
+                {
+                    if (EncodeHashPassword(user.Password) == userExistent.Password)
+                        return new UserResponse { HasError = false, User = userExistent };
+                    else
+                        return new UserResponse { HasError = true, Message = "Usuários e/ou senha inválido." };
+                }
+                else
+                    return new UserResponse { HasError = true, Message = "Usuários e/ou senha inválido." };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ocorreu um erro técnico realizar o login, verificar. Exception: {ex.Message}  StackTrace: {ex.StackTrace}");
+            }
+
+
+            string hashPassword = EncodeHashPassword(user.Password);
+
+            if (hashPassword != null)
+            {
+                user.Password = hashPassword;
+                user.ConfirmPassword = hashPassword;
+
+                //Validaçãó para um create antes de encaminhar para a repository
+                var hasAdded = await _rUserInternal.CreateAsync(user);
+
+                if (hasAdded)
+                    return new UserResponse { HasError = false, Message = "" };
+                else
+                    return new UserResponse { HasError = true, Message = "Não foi possível criar um novo usuário! Favor verificar." };
+            }
+            else
+                return new UserResponse { HasError = true, Message = "Não foi possível criar um novo usuário! Favor acionar o suporte." };
 
         }
 
         public async Task<List<UserInternal>> List()
         {
             List<UserInternal> result = await _rUserInternal.GetList();
+            return result;
+        }
+
+        private string EncodeHashPassword(string password)
+        {
+            try
+            {
+                byte[] encData_byte = new byte[password.Length];
+                encData_byte = System.Text.Encoding.UTF8.GetBytes(password);
+                string encodedData = Convert.ToBase64String(encData_byte);
+                return encodedData;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error in EncodeHashPassword " + ex.Message);
+                return null;
+            }
+        }
+        private string DecodeHashPassword(string encodedData)
+        {
+            System.Text.UTF8Encoding encoder = new System.Text.UTF8Encoding();
+            System.Text.Decoder utf8Decode = encoder.GetDecoder();
+            byte[] todecode_byte = Convert.FromBase64String(encodedData);
+            int charCount = utf8Decode.GetCharCount(todecode_byte, 0, todecode_byte.Length);
+            char[] decoded_char = new char[charCount];
+            utf8Decode.GetChars(todecode_byte, 0, todecode_byte.Length, decoded_char, 0);
+            string result = new String(decoded_char);
             return result;
         }
 

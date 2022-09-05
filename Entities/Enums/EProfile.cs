@@ -8,7 +8,7 @@ namespace Entities.Enums
 {
     public enum EProfile
     {
-        Admin = 0,
-        Funcionario = 1
+        Administrador = 0,
+        Comum = 1
     }
 }
