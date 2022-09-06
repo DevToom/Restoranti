@@ -47,7 +47,7 @@ namespace RestorantiAPI.Controllers
             {
                 var result = await _userService.Login(request);
                 if (!result.HasError)
-                    return Ok("Usuário logado com sucesso!");
+                    return Ok(result.User);
                 else
                     return BadRequest(result.Message);
             }
