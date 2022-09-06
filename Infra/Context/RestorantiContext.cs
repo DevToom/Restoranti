@@ -11,7 +11,8 @@ namespace Infra.Context
     public class RestorantiContext : DbContext
     {
         public RestorantiContext(DbContextOptions<RestorantiContext> options) : base(options)
-        {}
+        {
+        }
 
         #region DbSet's
 
@@ -29,7 +30,7 @@ namespace Infra.Context
 
         private string GetConnectionString()
         {
-            return "Server=11.102.0.21; Port = 3306; Database = restor96_restoranti; Uid = restor96_admin; Pwd = TCC@unip2022";
+            return "Server=50.116.87.218;Port=3306;Database=restor96_restoranti;Uid=restor96_admin;Pwd=TCC@unip2022";
             //return "Server=localhost;Port=3306;Database=meubanco;Uid=root;Pwd=admin";
         }
 

@@ -16,12 +16,12 @@ namespace Entities.Entities
         /// <summary>
         /// Nome do usuário ( administrador ou funcionário )
         /// </summary>
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         /// <summary>
         /// Telefone do usuário
         /// </summary>
-        public string Phone { get; set; }
+        public string? Phone { get; set; }
 
         /// <summary>
         /// Email do usuário
@@ -36,17 +36,17 @@ namespace Entities.Entities
         /// <summary>
         /// Nome de usuário
         /// </summary>
-        public string Username { get; set; }
+        public string? Username { get; set; }
 
         /// <summary>
         /// Senha do usuário
         /// </summary>
-        public string Password { get; set; }
+        public string? Password { get; set; }
 
         /// <summary>
         /// Confirmação da senha do usuário
         /// </summary>
-        public string ConfirmPassword { get; set; }
+        public string? ConfirmPassword { get; set; }
 
     }
 }
