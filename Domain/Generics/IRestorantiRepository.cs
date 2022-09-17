@@ -10,9 +10,9 @@ namespace Infra.Repository.Generics.Interface
 {
     public interface IRestorantiGeneric<T> where T : class
     {
-        Task Add(T Objeto);
-        Task Update(T Objeto);
-        Task Delete(T Objeto);
+        Task AddAsync(T Entity);
+        Task Update(T Entity);
+        Task Delete(T Entity);
         Task<T> GetById(int Id);
         Task<List<T>> GetList();
     }

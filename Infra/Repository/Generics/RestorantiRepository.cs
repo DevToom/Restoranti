@@ -25,7 +25,7 @@ namespace Infra.Repository.Generics
             this._optionsBuilder = new DbContextOptions<RestorantiContext>();
         }
 
-        public async Task Add(T entity)
+        public async Task AddAsync(T entity)
         {
             using (var data = new RestorantiContext(_optionsBuilder))
             {

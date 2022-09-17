@@ -12,12 +12,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSingleton(typeof(IRestorantiGeneric<>), typeof(RestorantiRepository<>));
 builder.Services.AddSingleton<IRUserInternal, RUserInternal>();
+builder.Services.AddSingleton<IROrder, ROrder>();
 
 #endregion
 
 #region Configure Services
 
 builder.Services.AddSingleton<IUserInternalService, UserInternalService>();
+builder.Services.AddSingleton<IOrderService, OrderService>();
 
 #endregion
 
