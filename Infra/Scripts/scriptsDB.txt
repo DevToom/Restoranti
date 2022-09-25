@@ -1,8 +1,7 @@
 ﻿
 SCRIPTS EXECUTADOS DURANTE A APLICAÇÃO....
 
-=-=-=-=-=-=--=-=-==-=-=-=-==-=-=-TABELA DE USUÁRIOS INTERNOS-=-==-=-==-=-=-=--=-=-==-=-=-=-=-=-=
-
+=-=-=-=-=-=--=-=-==-=-=-=-==-=-=- TABELA DE USUÁRIOS INTERNOS-=-==-=-==-=-=-=--=-=-==-=-=-=-=-=-=
 
 CREATE TABLE UserInternal(
 Id int AUTO_INCREMENT PRIMARY KEY,
@@ -22,8 +21,45 @@ ModifiedUserId int NULL
 Insert Into UserInternal(Name,Email,Profile,Username,Password, ConfirmPassword, 
 CreationDate, CreationUserId)
 Values (
-"Administrador","administrador@hotmail.com",0,"admin","123456", "123456", now(),1
+"Administrador","administrador@hotmail.com",0,"admin","MTIz", "MTIz", now(),1
 )
 
-
 =-=-=-=-=-=--=-=-==-=-=-=-==-=-=-=-=-=-=-==-=-=-=-=-==-=-=-=-=-=--=-=-==-=-==-=-=-=--=-=-==-=-=
+
+=-=-=-=-=-=-=-==-=-=--=-=-=-=-=-= TABELA DE PEDIDOS =-=-=-=-=-=-=-=-=-==-=-=--==-=-==-=-=-==-=-
+
+CREATE TABLE Orders(
+Id int AUTO_INCREMENT PRIMARY KEY,
+OrderNumber varchar(200) NOT NULL,
+TableNumber int NOT NULL,
+UserId int NOT NULL,
+Type int NOT NULL,
+ProductId int NOT NULL,
+ProductValue decimal(2,2) NULL,
+Total decimal(2,2) NULL,
+HasObservation BOOLEAN NOT NULL,
+Observation varchar(100) NULL,
+CreationDate datetime NOT NULL,
+CreationUserId int NOT NULL,
+ModifiedDate datetime NULL,
+ModifiedUserId int NULL
+);
+
+=================================================================================================
+
+=-=-=-=-=-=-=-==-=-=--=-=-=-=-=-= TABELA DE PRODUTOS =-=-=-=-=-=-=-=-=-==-=-=--==-=-==-=-=-==-=-=
+
+CREATE TABLE Products(
+ProductId int AUTO_INCREMENT PRIMARY KEY,
+CategoryId int NOT NULL,
+Name varchar(100) NOT NULL,
+Description varchar(9000) NOT NULL,
+Value decimal(2,2) NOT NULL,
+IsActive BOOLEAN NOT NULL,
+CreationDate datetime NOT NULL,
+CreationUserId int NOT NULL,
+ModifiedDate datetime NULL,
+ModifiedUserId int NULL
+);
+
+===================================================================================================

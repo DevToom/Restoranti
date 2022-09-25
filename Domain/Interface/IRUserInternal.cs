@@ -12,5 +12,6 @@ namespace Infra.Repository.Interface
     {
         Task<bool> CreateAsync(UserInternal user);
         Task<UserInternal> GetByUsername(UserInternal user);
+        Task<UserInternal> GetUserAdm();
     }
 }

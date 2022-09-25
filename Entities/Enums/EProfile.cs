@@ -8,7 +8,9 @@ namespace Entities.Enums
 {
     public enum EProfile
     {
+        //Adm vai ser apenas 1 usuário.
         Administrador = 0,
-        Comum = 1
+        Manager = 10,
+        Comum = 20
     }
 }

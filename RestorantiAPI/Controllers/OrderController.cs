@@ -21,6 +21,17 @@ namespace RestorantiAPI.Controllers
         }
 
         [HttpGet]
+        [Route("TestGeradorDePedido")]
+        public async Task<IActionResult> Test()
+        {
+            int length = 10;
+            Random random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return Ok(new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray()));
+        }
+
+        [HttpGet]
         [Route("GetListOrder")]
         public async Task<IActionResult> GetListOrder()
         {
@@ -30,7 +41,6 @@ namespace RestorantiAPI.Controllers
             else
                 return BadRequest("Nenhum pedido encontrado.");
         }
-
 
         [HttpPost]
         [Route("PostOrder")]

@@ -1,5 +1,6 @@
 ﻿using Domain.Interface;
 using Entities.Entities;
+using Entities.Entities.VM;
 using Infra.Repository.Interface;
 using System;
 using System.Collections.Generic;
@@ -85,6 +86,52 @@ namespace Domain.Services
         {
             List<UserInternal> result = await _rUserInternal.GetList();
             return result;
+        }
+
+        public async Task<bool> ValidatePasswordConfirm(string password)
+        {
+            try
+            {
+                UserInternal user = await _rUserInternal.GetUserAdm();
+                var passEncoded = EncodeHashPassword(password);
+
+                if (user.Password == passEncoded)
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ocorreu um erro técnico ao tentar realizar o ValidatePasswordConfirm, verificar. Exception: {ex.Message}  StackTrace: {ex.StackTrace}");
+                return false;
+            }
+
+        }
+        public async Task<bool> UpdatePasswordViaRecovery(UserValidateRecoveryPassword password)
+        {
+            try
+            {
+                var user = await _rUserInternal.GetByUsername(new UserInternal { Username = password.Username });
+                if (user != null)
+                {
+                    var passEncoded = EncodeHashPassword(password.Password);
+                    user.Password = passEncoded;
+                    user.ConfirmPassword = passEncoded;
+                    user.ModifiedDate = DateTime.Now;
+                    user.ModifiedUserId = 1;
+                    await _rUserInternal.Update(user);
+
+                    return true;
+                }
+                else
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ocorreu um erro técnico ao tentar realizar o ValidatePasswordConfirm, verificar. Exception: {ex.Message}  StackTrace: {ex.StackTrace}");
+                return false;
+            }
+
         }
 
         private string EncodeHashPassword(string password)

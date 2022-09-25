@@ -1,5 +1,6 @@
 ﻿using Domain.Interface;
 using Entities.Entities;
+using Entities.Entities.VM;
 using Infra.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -20,6 +21,8 @@ namespace RestorantiAPI.Controllers
             this._rUserInternal = rUserInternal;
             this._userService = userService;
         }
+
+        #region Login
 
         [Route("Create")]
         [HttpPost]
@@ -56,6 +59,53 @@ namespace RestorantiAPI.Controllers
                 return BadRequest("Model is not valid!");
             }
         }
+
+        #endregion
+
+        #region RecoveryPassword
+
+        [Route("recoverypassword/validate")]
+        [HttpPost]
+        public async Task<IActionResult> Validate([FromBody] UserValidateRecoveryPassword request)
+        {
+            var user = await _rUserInternal.GetByUsername(new UserInternal { Username = request.Username });
+            if (user != null)
+            {
+                if (user.Email == request.Email)
+                    return Ok();
+                else
+                    return BadRequest("Email não encontrado!");
+            }
+            else
+                return BadRequest("Usuário não existente!");
+
+        }
+
+        [Route("recoverypassword/validatepasswordconfirm/{password}")]
+        [HttpPost]
+        public async Task<IActionResult> ValidatePasswordConfirm(string password)
+        {
+            var isvalid = _userService.ValidatePasswordConfirm(password).Result;
+
+            if (isvalid)
+                return Ok();
+            else
+                return BadRequest("Senha inválida!");
+        }
+
+        [Route("recoverypassword/updatepasswordconfirm")]
+        [HttpPost]
+        public async Task<IActionResult> UpdatePassWordConfirm([FromBody] UserValidateRecoveryPassword request)
+        {
+            var isUpdate = _userService.UpdatePasswordViaRecovery(request).Result;
+
+            if (isUpdate)
+                return Ok("Senha alterada com sucesso.");
+            else
+                return BadRequest("Ocorreu um problema ao tentar atualizar a senha. Tente novamente!");
+        }
+
+        #endregion
 
         [Route("GetUsers")]
         [HttpGet]

@@ -48,7 +48,7 @@ namespace Domain.Services
                             ProductId = i.ProductId,
                             Name = i.Name,
                             CategoryId = i.CategoryId,
-                            Price = i.Price
+                            Value = i.Value
                         });
                     }
 

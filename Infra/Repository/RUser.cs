@@ -1,4 +1,5 @@
 ﻿using Entities.Entities;
+using Entities.Enums;
 using Infra.Context;
 using Infra.Repository.Generics;
 using Infra.Repository.Interface;
@@ -50,6 +51,19 @@ namespace Infra.Repository
             }
         }
 
+        public async Task<UserInternal> GetUserAdm()
+        {
+            using (var data = new RestorantiContext(_optionsBuilder))
+            {
+
+                var userExistent = data.Set<UserInternal>().Where(x => x.Profile == EProfile.Administrador ).FirstOrDefault();
+
+                if (userExistent != null)
+                    return userExistent;
+                else
+                    return null;
+            }
+        }
         public void AddModelBase(UserInternal user)
         {
             user.CreationDate = DateTime.Now;

@@ -1,4 +1,5 @@
 ﻿using Entities.Entities;
+using Entities.Entities.VM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,8 @@ namespace Domain.Interface
         Task<UserResponse> Create(UserInternal user);
         Task<UserResponse> Login(UserInternal user);
         Task<List<UserInternal>> List();
+        Task<bool> ValidatePasswordConfirm(string password);
+        Task<bool> UpdatePasswordViaRecovery(UserValidateRecoveryPassword password); 
+
     }
 }
