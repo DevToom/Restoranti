@@ -53,6 +53,21 @@ ModifiedUserId int NULL
 
 =================================================================================================
 
+=-=-=-=-=-=-=-==-=-=--=-=-=-=-=-= TABELA DE CATEGORIA DE PRODUTOS =-=-=-=-=-=-=-=-=-==-=-=--==-=-==-=-=-==-=-=
+
+CREATE TABLE Category(
+Id int AUTO_INCREMENT PRIMARY KEY,
+Name varchar(100) NOT NULL,
+MenuType int NOT NULL,
+Status int NOT NULL,
+CreationDate datetime NOT NULL,
+CreationUserId int NOT NULL,
+ModifiedDate datetime NULL,
+ModifiedUserId int NULL
+); 
+
+===================================================================================================
+
 =-=-=-=-=-=-=-==-=-=--=-=-=-=-=-= TABELA DE PRODUTOS =-=-=-=-=-=-=-=-=-==-=-=--==-=-==-=-=-==-=-=
 
 CREATE TABLE Products(
