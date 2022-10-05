@@ -37,9 +37,7 @@ namespace RestorantiAPI.Controllers
                     return BadRequest(result);
             }
             else
-            {
                 return BadRequest("Model is not valid!");
-            }
         }
 
         [Route("Login")]

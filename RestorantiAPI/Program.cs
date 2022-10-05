@@ -9,18 +9,11 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 #region Configure Repositories
-
-builder.Services.AddSingleton(typeof(IRestorantiGeneric<>), typeof(RestorantiRepository<>));
-builder.Services.AddSingleton<IRUserInternal, RUserInternal>();
-builder.Services.AddSingleton<IROrder, ROrder>();
-
+ConfigureRepositories();
 #endregion
 
 #region Configure Services
-
-builder.Services.AddSingleton<IUserInternalService, UserInternalService>();
-builder.Services.AddSingleton<IOrderService, OrderService>();
-
+ConfigureServices();
 #endregion
 
 builder.Services.AddControllers();
@@ -42,3 +35,18 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+void ConfigureRepositories()
+{
+    builder.Services.AddSingleton(typeof(IRestorantiGeneric<>), typeof(RestorantiRepository<>));
+    builder.Services.AddSingleton<IRUserInternal, RUserInternal>();
+    builder.Services.AddSingleton<IROrder, ROrder>();
+    builder.Services.AddSingleton<IRCategory, RCategory>();
+}
+
+void ConfigureServices()
+{
+    builder.Services.AddSingleton<IUserInternalService, UserInternalService>();
+    builder.Services.AddSingleton<IOrderService, OrderService>();
+    builder.Services.AddSingleton<ICategoryService, CategoryService>();
+}
