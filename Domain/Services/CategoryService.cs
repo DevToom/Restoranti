@@ -115,7 +115,7 @@ namespace Domain.Services
             try
             {
                 var entityList = await _rCategory.GetList();
-                entityList = entityList.Where(x => x.Name.Contains(Name) && x.MenuType == (EMenuType)MenuType && x.Status == (ECategoryStatus)Status).ToList();
+                entityList = entityList.Where(x => x.Name.ToUpper().Contains(Name.ToUpper()) && x.MenuType == (EMenuType)MenuType && x.Status == (ECategoryStatus)Status).ToList();
 
                 return new MessageResponse<List<Category>> { Entity = entityList };
             }
