@@ -27,7 +27,7 @@ namespace Domain.Services
             return orderList;
         }
 
-        public async Task<bool> PostOrderAsync(OrderVM request)
+        Task<MessageResponse<Order>> PostOrderAsync(Order request)
         {
             try
             {

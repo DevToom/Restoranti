@@ -33,7 +33,7 @@ namespace RestorantiAPI.Controllers
 
         [HttpPost]
         [Route("PostOrder")]
-        public async Task<IActionResult> PostOrder([FromBody] OrderVM request)
+        public async Task<IActionResult> PostOrder([FromBody] Order request)
         {
             if (ModelState.IsValid)
             {

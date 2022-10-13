@@ -49,18 +49,22 @@ CREATE TABLE Orders(
 Id int AUTO_INCREMENT PRIMARY KEY,
 OrderNumber varchar(200) NOT NULL,
 TableNumber int NOT NULL,
-UserId int NOT NULL,
+UserId int NULL,
 Type int NOT NULL,
+Status int NOT NULL,
 ProductId int NOT NULL,
-ProductValue decimal(2,2) NULL,
+ProductName varchar(150) NOT NULL,
+Quantity int NOT NULL,
+Value decimal(5,2) NOT NULL,
+HasObservation boolean NOT NULL,
+Observation varchar(300) NULL,
 Total decimal(2,2) NULL,
-HasObservation BOOLEAN NOT NULL,
-Observation varchar(100) NULL,
 CreationDate datetime NOT NULL,
 CreationUserId int NOT NULL,
 ModifiedDate datetime NULL,
 ModifiedUserId int NULL
 );
+
 
 =================================================================================================
 

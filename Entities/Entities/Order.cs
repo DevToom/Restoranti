@@ -1,6 +1,7 @@
 ﻿using Entities.Entities.VM;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -12,19 +13,74 @@ namespace Entities.Entities
     [Table("Orders")]
     public class Order : ModelBase
     {
-        public int OrderId { get; set; }
-        public string OrderNumber { get; set; } = GenerateOrderNumber();
+        [Key]
+        public int Id { get; set; }
+
+        /// <summary>
+        /// Número do pedido
+        /// </summary>
+        public string OrderNumber { get; set; }
+
+        /// <summary>
+        /// Número da mesa
+        /// </summary>
         public int TableNumber { get; set; }
-        public int UserId { get; set; }
+
+        /// <summary>
+        /// Id do cliente que realizou o pedido, caso tenha.
+        /// </summary>
+        public int? UserId { get; set; }
+
+        /// <summary>
+        /// Tipo de pedido
+        /// </summary>
         public EOrderType Type { get; set; }
 
-        //[JsonIgnore]
-        //public List<Itens> Itens { get; set; }
+        /// <summary>
+        /// Status do Pedido
+        /// </summary>
+        public EStatus Status { get; set; }
 
+        /// <summary>
+        /// Id do Produto
+        /// </summary>
+        public int ProductId { get; set; }
+
+        /// <summary>
+        /// Nome do Produto
+        /// </summary>
+        public string ProductName { get; set; }
+
+        /// <summary>
+        /// Quantidade escolhida
+        /// </summary>
+        public int Quantity { get; set; }
+
+        /// <summary>
+        /// Valor do Produto
+        /// </summary>
+        public decimal Value { get; set; }
+
+        /// <summary>
+        /// Tem observação?
+        /// </summary>
+        public bool hasObservation { get; set; }
+
+        /// <summary>
+        /// Caso tenha observação descrever aqui, por produto
+        /// </summary>
+        public string Observation { get; set; }
+
+        /// <summary>
+        /// Valor total do pedido
+        /// </summary>
         public decimal? Total { get; set; }
-        public bool HasObservation { get; set; }
-        public string? Observation { get; set; }
 
+        /// <summary>
+        /// Produtos VM
+        /// </summary>
+        [JsonIgnore]
+        public List<ProductVM> Product { get; set; }
 
         /// <summary>
         /// Gerar número do pedido
@@ -38,7 +94,14 @@ namespace Entities.Entities
             return new string(Enumerable.Repeat(chars, length)
                 .Select(s => s[random.Next(s.Length)]).ToArray());
         }
+    }
+    
 
+    public enum EStatus
+    {
+        A_PREPARAR = 0,
+        PREPARANDO = 1,
+        PREPARADO = 2
     }
 
     public enum EOrderType
