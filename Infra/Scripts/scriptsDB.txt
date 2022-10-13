@@ -89,12 +89,15 @@ ProductId int AUTO_INCREMENT PRIMARY KEY,
 CategoryId int NOT NULL,
 Name varchar(100) NOT NULL,
 Description varchar(9000) NOT NULL,
-Value decimal(2,2) NOT NULL,
-IsActive BOOLEAN NOT NULL,
+PriceALaCarte decimal(5,2) NULL,
+PriceRodizio decimal(5,2) NULL,
+Status BOOLEAN NOT NULL,
+ImageContent longblob NULL,
 CreationDate datetime NOT NULL,
 CreationUserId int NOT NULL,
 ModifiedDate datetime NULL,
 ModifiedUserId int NULL
 );
+
 
 ===================================================================================================

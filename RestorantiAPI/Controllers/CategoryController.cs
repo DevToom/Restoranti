@@ -101,7 +101,7 @@ namespace RestorantiAPI.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"Houve um problema ao tentar buscar as categorias. Ex: {ex.Message}");
+                return BadRequest($"Houve um problema ao tentar buscar a imagem da categoria. Ex: {ex.Message}");
             }
         }
 

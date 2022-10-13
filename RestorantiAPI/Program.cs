@@ -42,6 +42,7 @@ void ConfigureRepositories()
     builder.Services.AddSingleton<IRUserInternal, RUserInternal>();
     builder.Services.AddSingleton<IROrder, ROrder>();
     builder.Services.AddSingleton<IRCategory, RCategory>();
+    builder.Services.AddSingleton<IRProduct, RProduct>();
 }
 
 void ConfigureServices()
@@ -49,4 +50,5 @@ void ConfigureServices()
     builder.Services.AddSingleton<IUserInternalService, UserInternalService>();
     builder.Services.AddSingleton<IOrderService, OrderService>();
     builder.Services.AddSingleton<ICategoryService, CategoryService>();
+    builder.Services.AddSingleton<IProductService, ProductService>();
 }

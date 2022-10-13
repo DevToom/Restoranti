@@ -11,10 +11,12 @@ namespace Domain.Services
     public class CategoryService : ICategoryService
     {
         private readonly IRCategory _rCategory;
+        private readonly IRProduct _rProduct;
 
-        public CategoryService(IRCategory rCategory)
+        public CategoryService(IRCategory rCategory, IRProduct rProduct)
         {
             this._rCategory = rCategory;
+            this._rProduct = rProduct;
         }
 
         public async Task<MessageResponse<Category>> Add(Category category)
@@ -80,7 +82,18 @@ namespace Domain.Services
                     var category = await _rCategory.GetById(CategoryId);
                     if (category != null)
                     {
-                        await _rCategory.Delete(category);
+                        List<Product> existentProducts = _rProduct.GetList().Result;
+                        existentProducts = existentProducts.Where(x => x.CategoryId == CategoryId).ToList();
+
+                        if (existentProducts?.Count > 0)
+                        {
+                            string products = String.Empty;
+                            existentProducts.ForEach(x => products += x.Name + ", ");
+
+                            return new MessageResponse<Category> { HasError = true, Message = $@"Não foi possível remover, porque o{(existentProducts.Count > 1 ? "s" : "")} produto{(existentProducts.Count > 1 ? "s" : "")} {products.Substring(0, products.Length - 2)} {(existentProducts.Count > 1 ? "são" : "é")} dessa categoria. Remova-o{(existentProducts.Count > 1 ? "s" : "")} antes!" };
+                        }
+                        else
+                            await _rCategory.Delete(category);
 
                         return new MessageResponse<Category> { Entity = category, Message = "Categoria removida com sucesso!" };
                     }
@@ -116,6 +129,7 @@ namespace Domain.Services
             {
                 var entityList = await _rCategory.GetList();
                 entityList = entityList.Where(x => x.Name.ToUpper().Contains(Name.ToUpper()) && x.MenuType == (EMenuType)MenuType && x.Status == (ECategoryStatus)Status).ToList();
+                entityList = entityList.OrderBy(x => x.Id).ToList();
 
                 return new MessageResponse<List<Category>> { Entity = entityList };
             }

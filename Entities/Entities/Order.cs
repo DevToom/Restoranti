@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Entities.Entities.VM;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -17,8 +18,8 @@ namespace Entities.Entities
         public int UserId { get; set; }
         public EOrderType Type { get; set; }
 
-        [JsonIgnore]
-        public List<Product> Itens { get; set; }
+        //[JsonIgnore]
+        //public List<Itens> Itens { get; set; }
 
         public decimal? Total { get; set; }
         public bool HasObservation { get; set; }

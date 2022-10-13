@@ -41,16 +41,16 @@ namespace Domain.Services
                         Total = request.Total
                     };
 
-                    foreach (var i in request.itens)
-                    {
-                        order.Itens.Add(new Product
-                        {
-                            ProductId = i.ProductId,
-                            Name = i.Name,
-                            CategoryId = i.CategoryId,
-                            Value = i.Value
-                        });
-                    }
+                    //foreach (var i in request.itens)
+                    //{
+                    //    order.Itens.Add(new Itens
+                    //    {
+                    //        ProductId = i.ProductId,
+                    //        Name = i.Name,
+                    //        CategoryId = i.CategoryId,
+                    //        Value = i.Value
+                    //    });
+                    //}
 
                     await _rOrder.AddAsync(order);
 

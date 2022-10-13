@@ -18,6 +18,7 @@ namespace Infra.Context
 
         public DbSet<UserInternal>? UserInternals { get; set; }
         public DbSet<Category>? Categorys { get; set; }
+        public DbSet<Product>? Products { get; set; }
         public DbSet<Order>? Orders { get; set; }
 
         #endregion
