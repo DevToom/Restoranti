@@ -76,24 +76,7 @@ namespace Entities.Entities
         /// </summary>
         public decimal? Total { get; set; }
 
-        /// <summary>
-        /// Produtos VM
-        /// </summary>
-        [JsonIgnore]
-        public List<ProductVM> Product { get; set; }
-
-        /// <summary>
-        /// Gerar número do pedido
-        /// </summary>
-        /// <param name="length"></param>
-        /// <returns></returns>
-        public static string GenerateOrderNumber(int length = 10)
-        {
-            Random random = new Random();
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            return new string(Enumerable.Repeat(chars, length)
-                .Select(s => s[random.Next(s.Length)]).ToArray());
-        }
+        
     }
     
 
@@ -106,7 +89,7 @@ namespace Entities.Entities
 
     public enum EOrderType
     {
-        LaCarte = 0,
+        ALaCarte = 0,
         Rodizio = 10
     }
 

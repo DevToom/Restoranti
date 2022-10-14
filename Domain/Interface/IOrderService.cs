@@ -10,7 +10,7 @@ namespace Domain.Interface
 {
     public interface IOrderService
     {
-        Task<List<Order>> GetListOrdersAsync();
-        Task<MessageResponse<Order>> PostOrderAsync(Order order);
+        Task<MessageResponse<List<OrderResponseVM>>> GetListOrdersAsync();
+        Task<MessageResponse<List<Order>>> PostOrderAsync(OrderVM order);
     }
 }

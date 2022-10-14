@@ -10,5 +10,6 @@ namespace Domain.Interface
 {
     public interface IROrder : IRestorantiGeneric<Order>
     {
+        Task<List<Order>> GetByOrderNumber(string OrderNumber);
     }
 }

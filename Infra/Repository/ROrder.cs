@@ -19,6 +19,16 @@ namespace Infra.Repository
             this._optionsBuilder = new DbContextOptions<RestorantiContext>();
         }
 
+        public async Task<List<Order>> GetByOrderNumber(string OrderNumber)
+        {
+            using (var data = new RestorantiContext(_optionsBuilder))
+            {
+                var result = await data.Set<Order>().Where(x => x.OrderNumber == OrderNumber).ToListAsync();
+                if (result != null)
+                    return result;
 
+                return null;
+            }
+        }
     }
 }

@@ -8,21 +8,39 @@ namespace Entities.Entities.VM
 {
     public class OrderVM
     {
-        public int UserId { get; set; }
+        /// <summary>
+        /// Número do pedido
+        /// </summary>
+        public string OrderNumber { get; set; }
+
+        /// <summary>
+        /// Número da mesa
+        /// </summary>
         public int TableNumber { get; set; }
-        //public List<Itens> itens { get; set; }
-        public decimal Total { get; set; }
-        public bool hasObservation { get; set; }
-        public string Observation { get; set; }
+
+        /// <summary>
+        /// Id do cliente que realizou o pedido, caso tenha.
+        /// </summary>
+        public int? UserId { get; set; }
+
+        /// <summary>
+        /// Tipo de pedido
+        /// </summary>
+        public EOrderType Type { get; set; }
+
+        /// <summary>
+        /// Status do Pedido
+        /// </summary>
+        public EStatus Status { get; set; }
+
+        /// <summary>
+        /// Valor total do pedido
+        /// </summary>
+        public decimal? Total { get; set; }
+
+        /// <summary>
+        /// Produtos VM
+        /// </summary>
+        public List<ProductVM> Product { get; set; }
     }
-
-    //public class Itens
-    //{
-    //    public int ProductId { get; set; }
-    //    public int CategoryId { get; set; }
-    //    public string Name { get; set; }
-    //    public decimal Value { get; set; }
-    //    public string Quantity { get; set; }
-    //}
-
 }

@@ -24,24 +24,25 @@ namespace RestorantiAPI.Controllers
         [Route("GetListOrder")]
         public async Task<IActionResult> GetListOrder()
         {
-            var orders = _orderService.GetListOrdersAsync().Result;
-            if (orders.Count > 0)
-                return Ok(orders);
+            var result = _orderService.GetListOrdersAsync().Result;
+
+            if (!result.HasError)
+                return Ok(result.Entity);
             else
-                return BadRequest("Nenhum pedido encontrado.");
+                return BadRequest(result);
         }
 
         [HttpPost]
         [Route("PostOrder")]
-        public async Task<IActionResult> PostOrder([FromBody] Order request)
+        public async Task<IActionResult> PostOrder([FromBody] OrderVM request)
         {
             if (ModelState.IsValid)
             {
-                var Add = await _orderService.PostOrderAsync(request);
-                if (Add)
-                    return Ok(request);
+                var result = await _orderService.PostOrderAsync(request);
+                if (!result.HasError)
+                    return Ok(result);
                 else
-                    return BadRequest("Ocorreu um problema ao tentar gerar o pedido. Tente novamente!");
+                    return BadRequest(result);
             }
             else
             {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,11 @@ namespace Entities.Entities.VM
         /// <summary>
         /// Nome do Produto
         /// </summary>
-        public string Name { get; set; }
+        public string ProductName { get; set; }
+        /// <summary>
+        /// Quantidade do produto selecionado
+        /// </summary>
+        public int Quantity { get; set; }
 
         /// <summary>
         /// Valor do Produto
