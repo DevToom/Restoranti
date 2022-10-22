@@ -51,25 +51,28 @@ FOREIGN KEY (Id) REFERENCES UserInternal(Id)
 
 =-=-=-=-=-=-=-==-=-=--=-=-=-=-=-= TABELA DE PEDIDOS =-=-=-=-=-=-=-=-=-==-=-=--==-=-==-=-=-==-=-
 
-CREATE TABLE Orders(
-Id int AUTO_INCREMENT PRIMARY KEY,
-OrderNumber varchar(200) NOT NULL,
-TableNumber int NOT NULL,
-UserId int NULL,
-Type int NOT NULL,
-Status int NOT NULL,
-ProductId int NOT NULL,
-ProductName varchar(150) NOT NULL,
-Quantity int NOT NULL,
-Value decimal(5,2) NOT NULL,
-HasObservation boolean NOT NULL,
-Observation varchar(300) NULL,
-Total decimal(2,2) NULL,
-CreationDate datetime NOT NULL,
-CreationUserId int NOT NULL,
-ModifiedDate datetime NULL,
-ModifiedUserId int NULL
-);
+CREATE TABLE Orders (
+  Id int(11) NOT NULL AUTO_INCREMENT,
+  OrderNumber varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  TableNumber int(11) NOT NULL,
+  UserId int(11) DEFAULT NULL,
+  Type int(11) NOT NULL,
+  Status int(11) NOT NULL,
+  ProductId int(11) NOT NULL,
+  ProductName varchar(150) COLLATE utf8_unicode_ci NOT NULL,
+  Quantity int(11) NOT NULL,
+  Value decimal(5,2) NOT NULL,
+  HasObservation tinyint(1) NOT NULL,
+  Observation varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
+  Total decimal(2,2) DEFAULT NULL,
+  CreationDate datetime NOT NULL,
+  CreationUserId int(11) NOT NULL,
+  ModifiedDate datetime DEFAULT NULL,
+  ModifiedUserId int(11) DEFAULT NULL,
+  AccountOrderId int not null,
+  PRIMARY KEY (Id),
+  FOREIGN KEY (AccountOrderId) REFERENCES AccountOrder(Id)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 =================================================================================================
