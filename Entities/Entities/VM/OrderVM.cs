@@ -42,5 +42,10 @@ namespace Entities.Entities.VM
         /// Produtos VM
         /// </summary>
         public List<ProductVM> Product { get; set; }
+
+        /// <summary>
+        /// Número da conta que está salvo com o front.
+        /// </summary>
+        public int AccountUserId { get; set; }
     }
 }

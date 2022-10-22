@@ -110,7 +110,8 @@ namespace Domain.Services
                                     Observation = item.Observation,
                                     Total = request.Total,
                                     CreationDate = creationDate,
-                                    CreationUserId = request.UserId
+                                    CreationUserId = request.UserId,
+                                    AccountUserId = request.AccountUserId
                                 };
 
                                 await _rOrder.AddAsync(order);
