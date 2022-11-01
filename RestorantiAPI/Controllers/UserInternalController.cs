@@ -34,7 +34,7 @@ namespace RestorantiAPI.Controllers
                 if (!result.HasError)
                     return Ok("Usuário criado com sucesso!");
                 else
-                    return BadRequest(result);
+                    return BadRequest(result.Message);
             }
             else
                 return BadRequest("Model is not valid!");
@@ -114,6 +114,16 @@ namespace RestorantiAPI.Controllers
                 return Ok(result);
             else
                 return BadRequest();
+        }
+        [Route("PasswordAdministratorConfirm/{password}")]
+        [HttpPost]
+        public async Task<IActionResult> PasswordAdministratorConfirm(string password)
+        {
+            var result = _userService.ValidatePasswordConfirm(password).Result;
+            if (result)
+                return Ok();
+            else
+                return BadRequest("Senha incorreta!");
         }
     }
 }

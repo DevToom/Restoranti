@@ -15,10 +15,14 @@ namespace Domain.Services
     public class OrderService : IOrderService
     {
         private readonly IROrder _rOrder;
+        private readonly ITableService _tableService;
+        private readonly IAccountOrderService _accountOrderService;
 
-        public OrderService(IROrder rOrder)
+        public OrderService(IROrder rOrder, ITableService tableService, IAccountOrderService accountOrderService)
         {
             this._rOrder = rOrder;
+            this._tableService = tableService;
+            this._accountOrderService = accountOrderService;
         }
 
         public async Task<MessageResponse<List<OrderResponseVM>>> GetListOrdersAsync()
@@ -74,7 +78,6 @@ namespace Domain.Services
             {
                 return new MessageResponse<List<OrderResponseVM>> { HasError = true, Message = $"Ocorreu um erro técnico ao tentar buscar lista de pedidos. Exception: {ex.Message}" };
             }
-
         }
 
         public async Task<MessageResponse<List<Order>>> PostOrderAsync(OrderVM request)
@@ -86,41 +89,55 @@ namespace Domain.Services
                     if (request.Product?.Count > 0)
                     {
                         string OrderNumber = String.Empty;
+                        bool HasUpdateTable = true;
+                        bool HasOpenedAccount = true;
 
                         try
                         {
+                            //Quando for o primeiro pedido, abrir uma mesa e também abrir a conta para o cliente
+                            if (request.isFirst && request.AccountOrderId == 0)
+                            {
+                                HasUpdateTable = await _tableService.UpdateStatusTable(request.TableNumber);
+                                var result = await _accountOrderService.OpenAccount(request.TableNumber, request.UserId);
+                                HasOpenedAccount = result.HasError == true ? false : true;
+                                if (HasOpenedAccount)
+                                    request.AccountOrderId = result.Entity.Id;
+                            }
+
                             List<Order> list = new List<Order>();
                             OrderNumber = GenerateOrderNumber();
                             DateTime creationDate = DateTime.Now;
 
-                            foreach (var item in request.Product)
+                            if (HasUpdateTable && HasOpenedAccount)
                             {
-                                Order order = new Order()
+                                foreach (var item in request.Product)
                                 {
-                                    OrderNumber = OrderNumber,
-                                    TableNumber = request.TableNumber,
-                                    UserId = request.UserId,
-                                    Type = request.Type,
-                                    Status = EStatus.A_PREPARAR,
-                                    ProductId = item.ProductId,
-                                    ProductName = item.ProductName,
-                                    Quantity = item.Quantity,
-                                    Value = item.Value,
-                                    hasObservation = item.hasObservation,
-                                    Observation = item.Observation,
-                                    Total = request.Total,
-                                    CreationDate = creationDate,
-                                    CreationUserId = request.UserId,
-                                    AccountUserId = request.AccountUserId
-                                };
+                                    Order order = new Order()
+                                    {
+                                        OrderNumber = OrderNumber,
+                                        TableNumber = request.TableNumber,
+                                        UserId = request.UserId,
+                                        Type = request.Type,
+                                        Status = EStatus.A_PREPARAR,
+                                        ProductId = item.ProductId,
+                                        ProductName = item.ProductName,
+                                        Quantity = item.Quantity,
+                                        Value = item.Value,
+                                        hasObservation = item.hasObservation,
+                                        Observation = item.Observation,
+                                        Total = request.Total,
+                                        CreationDate = creationDate,
+                                        CreationUserId = request.UserId,
+                                        AccountOrderId = request.AccountOrderId
+                                    };
 
-                                await _rOrder.AddAsync(order);
-                                list.Add(order);
-
+                                    await _rOrder.AddAsync(order);
+                                    list.Add(order);
+                                }
+                                return new MessageResponse<List<Order>> { HasError = false, Entity = list, Message = $"Pedido gerado com sucesso!" };
                             }
-
-                            return new MessageResponse<List<Order>> { HasError = false, Entity = list, Message = $"Pedido gerado com sucesso!" };
-
+                            else
+                                return new MessageResponse<List<Order>> { HasError = true, Entity = list, Message = $"Houve um problema ao tentar abrir a mesa e/ou a conta, chame um funcionário!" };
                         }
                         catch (Exception ex)
                         {
@@ -137,7 +154,6 @@ namespace Domain.Services
             {
                 return new MessageResponse<List<Order>> { HasError = true, Message = $"Ocorreu um erro técnico ao tentar buscar lista de pedidos. Exception: {ex.Message}" };
             }
-
         }
 
         /// <summary>

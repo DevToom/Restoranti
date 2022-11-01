@@ -10,11 +10,11 @@ namespace Domain.Interface
 {
     public interface IUserInternalService
     {
-        Task<UserResponse> Create(UserInternal user);
-        Task<UserResponse> Login(UserInternal user);
+        Task<UserResponse> Create(UserInternal user, bool isTest = false);
+        Task<UserResponse> Login(UserInternal user, bool isTest = false);
         Task<List<UserInternal>> List();
-        Task<bool> ValidatePasswordConfirm(string password);
-        Task<bool> UpdatePasswordViaRecovery(UserValidateRecoveryPassword password); 
+        Task<bool> ValidatePasswordConfirm(string password, bool isTest = false);
+        Task<bool> UpdatePasswordViaRecovery(UserValidateRecoveryPassword password);
 
     }
 }

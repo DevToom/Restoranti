@@ -77,7 +77,7 @@ namespace Entities.Entities
         public decimal? Total { get; set; }
 
         [ForeignKey("AccountOrder")]
-        public int AccountUserId { get; set; }
+        public int AccountOrderId { get; set; }
         
     }
     

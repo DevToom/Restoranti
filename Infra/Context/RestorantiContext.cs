@@ -20,6 +20,8 @@ namespace Infra.Context
         public DbSet<Category>? Categorys { get; set; }
         public DbSet<Product>? Products { get; set; }
         public DbSet<Order>? Orders { get; set; }
+        public DbSet<AccountOrder> AccountOrders { get; set; }
+        public DbSet<Table> Tables { get; set; }
 
         #endregion
 
@@ -33,8 +35,8 @@ namespace Infra.Context
 
         private string GetConnectionString()
         {
-            return "Server=50.116.87.218;Port=3306;Database=restor96_restoranti;Uid=restor96_admin;Pwd=TCC@unip2022";
-            //return "Server=localhost;Port=3306;Database=meubanco;Uid=root;Pwd=admin";
+            //return "Server=50.116.87.218;Port=3306;Database=restor96_restoranti;Uid=restor96_admin;Pwd=TCC@unip2022";
+            return "Server=localhost;Port=3306;Database=meubanco;Uid=root;Pwd=admin";
         }
 
     }

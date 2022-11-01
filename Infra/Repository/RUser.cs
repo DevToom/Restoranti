@@ -56,7 +56,7 @@ namespace Infra.Repository
             using (var data = new RestorantiContext(_optionsBuilder))
             {
 
-                var userExistent = data.Set<UserInternal>().Where(x => x.Profile == EProfile.Administrador ).FirstOrDefault();
+                var userExistent = data.Set<UserInternal>().Where(x => x.Username == "admin" ).FirstOrDefault();
 
                 if (userExistent != null)
                     return userExistent;

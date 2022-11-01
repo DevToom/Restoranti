@@ -21,6 +21,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entiti
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "InstallerRestorantiAPI", "InstallerRestorantiAPI\InstallerRestorantiAPI.vdproj", "{FDDE30A9-5F93-47E8-AA3E-589FE5E018A1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5-Tests", "5-Tests", "{585B3FAD-4B2A-45FA-A50D-9C810BF41285}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{D3DF8BD0-2C0B-486D-AC2B-9578E929A9C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,10 @@ Global
 		{8DE825D7-40C6-4132-82B4-05F8953231AA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FDDE30A9-5F93-47E8-AA3E-589FE5E018A1}.Debug|Any CPU.ActiveCfg = Debug
 		{FDDE30A9-5F93-47E8-AA3E-589FE5E018A1}.Release|Any CPU.ActiveCfg = Release
+		{D3DF8BD0-2C0B-486D-AC2B-9578E929A9C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3DF8BD0-2C0B-486D-AC2B-9578E929A9C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3DF8BD0-2C0B-486D-AC2B-9578E929A9C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3DF8BD0-2C0B-486D-AC2B-9578E929A9C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -54,6 +62,7 @@ Global
 		{24F0E510-6B9E-4617-8174-FC240864404D} = {AC062C15-B519-43FC-BCAA-768990388F08}
 		{45F51834-C14B-4517-B7C2-2B56C00448DE} = {34EC3E6B-6A41-49AB-9247-346710B9F270}
 		{8DE825D7-40C6-4132-82B4-05F8953231AA} = {634962B7-E0DE-4345-9676-6C029D9C1546}
+		{D3DF8BD0-2C0B-486D-AC2B-9578E929A9C9} = {585B3FAD-4B2A-45FA-A50D-9C810BF41285}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {86BB307A-D73D-48D9-827C-4EE7090E3193}

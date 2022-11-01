@@ -36,17 +36,17 @@ namespace Entities.Entities
         /// <summary>
         /// Nome de usuário
         /// </summary>
-        public string? Username { get; set; }
+        public string Username { get; set; }
 
         /// <summary>
         /// Senha do usuário
         /// </summary>
-        public string? Password { get; set; }
+        public string Password { get; set; }
 
         /// <summary>
         /// Confirmação da senha do usuário
         /// </summary>
-        public string? ConfirmPassword { get; set; }
+        public string ConfirmPassword { get; set; }
 
     }
 }

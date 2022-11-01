@@ -21,7 +21,7 @@ namespace Entities.Entities.VM
         /// <summary>
         /// Id do cliente que realizou o pedido, caso tenha.
         /// </summary>
-        public int? UserId { get; set; }
+        public int UserId { get; set; }
 
         /// <summary>
         /// Tipo de pedido
@@ -46,6 +46,11 @@ namespace Entities.Entities.VM
         /// <summary>
         /// Número da conta que está salvo com o front.
         /// </summary>
-        public int AccountUserId { get; set; }
+        public int AccountOrderId { get; set; }
+
+        /// <summary>
+        /// Informação que o front vai informar para dizer se aquele é o primeiro pedido do cliente
+        /// </summary>
+        public bool isFirst { get; set; }
     }
 }
