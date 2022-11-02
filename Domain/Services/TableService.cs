@@ -113,5 +113,21 @@ namespace Domain.Services
                 return false;
             }
         }
+
+        public async Task<MessageResponse<List<Table>>> GetListByFilters(int TableNumber, string Status)
+        {
+            try
+            {
+                var entityList = await _rTable.GetList();
+                entityList = entityList.Where(x => x.TableStatus.ToUpper().Contains(Status.ToUpper()) && x.TableNumber == TableNumber).ToList();
+                entityList = entityList.OrderBy(x => x.TableNumber).ToList();
+
+                return new MessageResponse<List<Table>> { Entity = entityList };
+            }
+            catch (Exception ex)
+            {
+                return new MessageResponse<List<Table>> { HasError = true, Message = $"Ocorreu um problema ao tentar buscar as informações de mesas com filtros. Ex: {ex.Message}" };
+            }
+        }
     }
 }

@@ -89,5 +89,21 @@ namespace RestorantiAPI.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("ListWithFilter")]
+        public async Task<IActionResult> ListWithFilter(int TableNumber, string Status = "")
+        {
+            try
+            {
+                var result = await _tableService.GetListByFilters(TableNumber, Status);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Houve um problema ao tentar buscar as mesas com filtros. Ex: {ex.Message}");
+            }
+        }
+
     }
 }

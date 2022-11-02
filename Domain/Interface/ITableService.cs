@@ -13,5 +13,7 @@ namespace Domain.Interface
         Task<MessageResponse<Table>> Delete(int TableId);
         Task<MessageResponse<List<Table>>> GetList();
         Task<bool> UpdateStatusTable(int TableNumber);
+        Task<MessageResponse<List<Table>>> GetListByFilters(int TableNumber, string Status);
+
     }
 }
