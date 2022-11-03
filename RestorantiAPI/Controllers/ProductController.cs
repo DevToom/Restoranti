@@ -110,7 +110,6 @@ namespace RestorantiAPI.Controllers
         {
             try
             {
-                //var result = await _categoryService.GetListByFilters(Name, MenuType, Status);
                 var result = await _productService.GetListByFilters(Name, CategoryId, Status);
 
                 return Ok(result);

@@ -9,7 +9,6 @@ namespace Entities.Entities
     public class ModelBase
     {
         public DateTime? CreationDate { get; set; } = DateTime.Now;
-
         /// <summary>
         /// Está sendo iniciado sempre com 1, pois 1 vai ser código de criação via senha admnistrador
         /// </summary>

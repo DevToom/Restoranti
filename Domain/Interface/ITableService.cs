@@ -10,10 +10,13 @@ namespace Domain.Interface
     public interface ITableService
     {
         Task<MessageResponse<Table>> Add(Table request);
-        Task<MessageResponse<Table>> Delete(int TableId);
         Task<MessageResponse<List<Table>>> GetList();
         Task<bool> UpdateStatusTable(int TableNumber);
         Task<MessageResponse<List<Table>>> GetListByFilters(int TableNumber, string Status);
+        Task<MessageResponse<Table>> UpdateStatusTableViaCaixa(Table request);
+        Task<MessageResponse<Table>> ConfirmUpdateStatusTableViaCaixa(Table request);
+        Task<MessageResponse<Table>> Delete(int TableId);
+        
 
     }
 }

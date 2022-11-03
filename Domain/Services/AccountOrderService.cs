@@ -1,6 +1,7 @@
 ﻿using Domain.Interface;
 using Entities.Entities;
 using Entities.Entities.Constants;
+using Entities.Entities.VM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,6 +68,40 @@ namespace Domain.Services
             catch (Exception ex)
             {
                 return new MessageResponse<AccountOrder> { HasError = true, Message = $"Não foi possível abrir a conta para a mesa {TableNumber} - {ex.Message}" };
+            }
+
+        }
+
+        public async Task<MessageResponse<AccountOrder>> UpdateValueTotalAccount(OrderVM request)
+        {
+            try
+            {
+                if (request != null)
+                {
+                    var accountTable = await _rAccountOrder.ValidateIfTableIsAvailable(request.TableNumber);
+                    if (accountTable.Any())
+                    {
+                        var account = accountTable.First();
+
+                        account.ValorConta = account.ValorConta + request.Total;
+                        account.UserAppId = request.UserId;
+                        account.ModifiedDate = DateTime.Now;
+                        account.ModifiedUserId = request.UserId;
+
+                        await _rAccountOrder.Update(account);
+
+                        return new MessageResponse<AccountOrder> { Entity = account, Message = "Conta atualizada com sucesso!" };
+                    }
+                    return new MessageResponse<AccountOrder> { HasError = true, Message = "Não foi encotrado nenhuma conta para a mesa para poder atualizar." };
+                }
+                else
+                {
+                    return new MessageResponse<AccountOrder> { HasError = true, Message = "Não existe nenhum valor para o pedido informado. (null)" };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new MessageResponse<AccountOrder> { HasError = true, Message = $"Não foi possível atualizar a conta para a mesa {request.TableNumber} - {ex.Message}" };
             }
 
         }

@@ -134,6 +134,10 @@ namespace Domain.Services
                                     await _rOrder.AddAsync(order);
                                     list.Add(order);
                                 }
+
+                                //Atualizar o valor total da conta.
+                                await _accountOrderService.UpdateValueTotalAccount(request);
+
                                 return new MessageResponse<List<Order>> { HasError = false, Entity = list, Message = $"Pedido gerado com sucesso!" };
                             }
                             else

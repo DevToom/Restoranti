@@ -32,5 +32,18 @@ namespace Infra.Repository
             }
         }
 
+        public async Task<AccountOrder> GetAccountForTableSpecific(int TableNumber)
+        {
+            using (var data = new RestorantiContext(_optionsBuilder))
+            {
+                var result = await data.Set<AccountOrder>().Where(x => x.TableNumber == TableNumber && x.StatusAccountOrder != AccountOrderConstants.ACCOUNT_CLOSE_VALUE).ToListAsync();
+                if (result != null)
+                    return result.FirstOrDefault();
+
+                return null;
+            }
+        }
+
+
     }
 }

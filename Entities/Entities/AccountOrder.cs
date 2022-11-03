@@ -17,6 +17,6 @@ namespace Entities.Entities
         public int TableNumber { get; set; }
         public int UserAppId { get; set; }
         public string StatusAccountOrder { get; set; }
-        public decimal ValorConta { get; set; }
+        public decimal? ValorConta { get; set; }
     }
 }

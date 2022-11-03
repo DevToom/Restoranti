@@ -12,10 +12,13 @@ namespace Domain.Services
     public class TableService : ITableService
     {
         private readonly IRTable _rTable;
-
-        public TableService(IRTable rTable)
+        private readonly IAccountOrderService _accountOrderService;
+        private readonly IRAccountOrder _rAccountOrder;
+        public TableService(IRTable rTable, IAccountOrderService accountOrderService, IRAccountOrder rAccountOrder)
         {
             this._rTable = rTable;
+            this._accountOrderService = accountOrderService;
+            _rAccountOrder = rAccountOrder;
         }
 
         public async Task<MessageResponse<Table>> Add(Table request)
@@ -47,27 +50,6 @@ namespace Domain.Services
             catch (Exception ex)
             {
                 return new MessageResponse<Table> { HasError = true, Message = $"Não possível adicionar uma nova mesa - {ex.Message}" };
-            }
-        }
-
-        public async Task<MessageResponse<Table>> Delete(int TableId)
-        {
-            try
-            {
-                var table = _rTable.GetById(TableId).Result;
-                if (table != null)
-                {
-                    await _rTable.Delete(table);
-                    return new MessageResponse<Table> { Entity = null, Message = "Mesa removido com sucesso!" };
-                }
-                else
-                {
-                    return new MessageResponse<Table> { HasError = true, Message = "Não foi encontrada nenhuma mesa com esse ID. (null)" };
-                }
-            }
-            catch (Exception ex)
-            {
-                return new MessageResponse<Table> { HasError = true, Message = $"Não possível remover a mesa - {ex.Message}" };
             }
         }
 
@@ -129,5 +111,118 @@ namespace Domain.Services
                 return new MessageResponse<List<Table>> { HasError = true, Message = $"Ocorreu um problema ao tentar buscar as informações de mesas com filtros. Ex: {ex.Message}" };
             }
         }
+
+        public async Task<MessageResponse<Table>> UpdateStatusTableViaCaixa(Table request)
+        {
+            try
+            {
+                if (request != null)
+                {
+                    if (request.TableStatus == TableConstants.BLOCK_VALUE)
+                    {
+                        var entity = await _rTable.GetById(request.Id);
+                        entity.ModifiedDate = DateTime.Now;
+                        entity.TableStatus = request.TableStatus;
+                        entity.ModifiedUserId = request.ModifiedUserId;
+
+                        await _rTable.Update(entity);
+                        return new MessageResponse<Table> { Entity = entity, HasError = false, Message = "Mesa atualizada com sucesso!" };
+                    }
+
+                    //Verificar se existe alguma conta aberta para a mesa.
+                    AccountOrder accountsOrders = _rAccountOrder.GetAccountForTableSpecific(request.TableNumber).Result;
+
+                    if (accountsOrders != null)
+                        return new MessageResponse<Table> { Entity = request, HasError = true, Message = $"Existe uma conta atualmente com o status de {accountsOrders.StatusAccountOrder}. Você deseja continuar continuar com a alteração?" };
+                    else
+                    {
+                        var entity = await _rTable.GetById(request.Id);
+                        entity.ModifiedDate = DateTime.Now;
+                        entity.TableStatus = request.TableStatus;
+                        entity.ModifiedUserId = request.ModifiedUserId;
+
+                        await _rTable.Update(entity);
+                        return new MessageResponse<Table> { Entity = entity, HasError = false, Message = $"Mesa atualizada com sucesso!" };
+                    }
+                }
+                else
+                    return new MessageResponse<Table> { HasError = true, Message = "Não há nenhuma informação sobre a mesa. (null)" };
+            }
+            catch (Exception ex)
+            {
+                return new MessageResponse<Table> { HasError = true, Message = $"Não possível atualizar status da mesa - {ex.Message}" };
+            }
+        }
+
+        public async Task<MessageResponse<Table>> ConfirmUpdateStatusTableViaCaixa(Table request)
+        {
+            try
+            {
+                if (request != null)
+                {
+                    var accountOrder = await _rAccountOrder.GetAccountForTableSpecific(request.TableNumber);
+                    accountOrder.StatusAccountOrder = AccountOrderConstants.ACCOUNT_CLOSE_VALUE;
+                    accountOrder.ModifiedDate = DateTime.Now;
+                    accountOrder.ModifiedUserId = request.ModifiedUserId;
+
+                    //Fecha a conta que estava com status aberta.
+                    await _rAccountOrder.Update(accountOrder);
+
+                    //Atualiza o status da mesa ( disponivel )
+                    var entity = await _rTable.GetById(request.Id);
+                    entity.ModifiedDate = DateTime.Now;
+                    entity.TableStatus = request.TableStatus;
+                    entity.ModifiedUserId = request.ModifiedUserId;
+                    await _rTable.Update(entity);
+
+                    return new MessageResponse<Table> { Entity = entity, Message = "Mesa atualizada com sucesso!" };
+                }
+                else
+                {
+                    return new MessageResponse<Table> { HasError = true, Message = "Não há nenhuma informação sobre a mesa. (null)" };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new MessageResponse<Table> { HasError = true, Message = $"Não possível atualizar uma mesa - {ex.Message}" };
+            }
+        }
+
+        public async Task<MessageResponse<Table>> Delete(int TableId)
+        {
+            try
+            {
+                if (TableId != 0)
+                {
+                    var table = await _rTable.GetById(TableId);
+                    if (table != null)
+                    {
+                        if (table.TableStatus == TableConstants.BLOCK_VALUE)
+                            return new MessageResponse<Table> { HasError = true, Message = "A mesa está ocupada, não é possível remover!" };
+
+                        var account = await _rAccountOrder.GetAccountForTableSpecific(table.TableNumber);
+                        if (account.StatusAccountOrder == AccountOrderConstants.ACCOUNT_OPEN_VALUE)
+                            return new MessageResponse<Table> { HasError = true, Message = "A mesa está com uma conta aberta. Não é possível remover!" };
+
+                        await _rTable.Delete(table);
+
+                        return new MessageResponse<Table> { Entity = table, Message = "Mesa removida com sucesso!" };
+                    }
+                    else
+                        return new MessageResponse<Table> { Entity = table, Message = "Mesa não encontrada para ser removida!" };
+                }
+                else
+                {
+                    return new MessageResponse<Table> { HasError = true, Message = $"Não há nenhuma mesa com o Id {TableId}!" };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new MessageResponse<Table> { HasError = true, Message = $"Não foi possível excluir a mesa - {ex.Message}" };
+            }
+
+        }
+
+
     }
 }

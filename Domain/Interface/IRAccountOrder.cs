@@ -11,5 +11,6 @@ namespace Domain.Interface
     public interface IRAccountOrder : IRestorantiGeneric<AccountOrder>
     {
         Task<List<AccountOrder>> ValidateIfTableIsAvailable(int TableNumber);
+        Task<AccountOrder> GetAccountForTableSpecific(int TableNumber); 
     }
 }
